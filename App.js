@@ -7,7 +7,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Hello ayaan</Text>
       <StatusBar style="auto" />
-      <Button title='Dont  press me'></Button>
+      <Button title='Do press me'></Button>
     </View>
   );
 }
