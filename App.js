@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default function App() {
   
@@ -7,7 +7,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Hello ayaan</Text>
       <StatusBar style="auto" />
-      <button>Click me</button>
+      <Button title='Dont  press me'></Button>
     </View>
   );
 }
