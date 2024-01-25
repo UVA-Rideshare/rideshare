@@ -6,8 +6,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello ayaan</Text>
-      <StatusBar style="auto" />
-      <Button title='Do press me'></Button>
     </View>
   );
 }
