@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello ayaan</Text>
-      <Button title="Mirela is the best"></Button>
+      <Button title="Yo mama is the best"></Button>
     </View>
   );
 }
