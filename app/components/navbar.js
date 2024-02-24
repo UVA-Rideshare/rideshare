@@ -1,22 +1,22 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 
-const BottomNavBar = ({ onHomePress, onAddPress, onProfilePress }) => {
+const BottomNavBar = ({ navigation }) => {
   return (
     <View style={styles.navbarContainer}>
-      <TouchableOpacity onPress={onHomePress} style={styles.navItem}>
+      <TouchableOpacity onPress={() => {navigation.navigate('Homepage')}} style={styles.navItem}>
         {/* Replace with your home icon */}
         <Image source={require('../../assets/home.png')} style={styles.navIcon} />
         <Text>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onAddPress} style={styles.navItem}>
+      <TouchableOpacity onPress={() => {navigation.navigate('CreatePost')}} style={styles.navItem}>
         {/* Replace with your add icon */}
         <Image source={require('../../assets/addpost.png')} style={styles.navIcon} />
         <Text>Add</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onProfilePress} style={styles.navItem}>
+      <TouchableOpacity onPress={() => {console.log("not done yet")}} style={styles.navItem}>
         {/* This would typically be the profile picture */}
         <Image source={require('../../assets/profilepicture.png')} style={styles.navIcon} />
         <Text>Profile</Text>

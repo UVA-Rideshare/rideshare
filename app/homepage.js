@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js'
+import CreatePost from './createPost.js';
 import BottomNavBar from './components/navbar.js';
 
 const samplePostDB = [
@@ -34,9 +35,7 @@ const Homepage = ({ navigation }) => {
                 />
             ))}
             <BottomNavBar
-                onHomePress={() => console.log('Home pressed')}
-                onAddPress={() => console.log('Add pressed')}
-                onProfilePress={() => console.log('Profile pressed')}
+                navigation={navigation}
             />
         </SafeAreaView>
     )
