@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js'
+import BottomNavBar from './components/navbar.js';
 
 const samplePostDB = [
     {
@@ -23,7 +24,7 @@ const samplePostDB = [
 
 const Homepage = ({ navigation }) => {
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.safeArea}>
             {samplePostDB.map((post, index) => (
                 <HomepagePost 
                     key={index}
@@ -32,8 +33,23 @@ const Homepage = ({ navigation }) => {
                     description={post.description} 
                 />
             ))}
+            <BottomNavBar
+                onHomePress={() => console.log('Home pressed')}
+                onAddPress={() => console.log('Add pressed')}
+                onProfilePress={() => console.log('Profile pressed')}
+            />
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1, // Ensure SafeAreaView fills the screen
+        justifyContent: 'space-between' // Pushes children to the ends of the container
+    },
+    container: {
+        flex: 1 // Take up all available space
+    },
+});
 
 export default Homepage;
