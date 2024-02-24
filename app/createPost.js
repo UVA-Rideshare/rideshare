@@ -32,26 +32,26 @@ const CreatePost = ({ navigation }) => {
             <Text style={styles.title}>Vent Out Here</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Vent title"
+                placeholder="Post title"
                 value={title}
                 onChangeText={setTitle}
             />
             <TextInput
                 style={[styles.input, styles.textArea]}
-                placeholder="Vent body"
+                placeholder="Post Details"
                 multiline
                 value={body}
                 onChangeText={setBody}
             />
-            <Text>Vent author:</Text>
-            <Text>Pssst... you can make it anonymous...</Text>
+            <Text>Post author:</Text>
+            <Text>Reminder to leave your contact information!</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Author"
                 value={author}
                 onChangeText={setAuthor}
             />
-            {!isPending && <Button title="Add Vent" onPress={handleSubmit} />}
+            {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
             {isPending && <ActivityIndicator size="large" />}
         </View>
     );
