@@ -4,6 +4,8 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIn
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { db } from "../firebaseconfig"
+
 const CreatePost = ({ navigation }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
