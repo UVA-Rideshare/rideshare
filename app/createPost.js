@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button } from 'react-native';
+
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreatePost = ({ navigation }) => {
@@ -29,7 +31,7 @@ const CreatePost = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Vent Out Here</Text>
+            <Text style={styles.title}>Catch a ride here</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Post title"
