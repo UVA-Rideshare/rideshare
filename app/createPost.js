@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, FlatList } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { db } from "../firebaseconfig"
+import { collection, setDoc } from 'firebase/firestore';
+import { firebase } from '@react-native-firebase/auth';
+import { Firestore } from 'firebase/firestore';
 
 const CreatePost = ({ navigation }) => {
     const [title, setTitle] = useState('');
@@ -13,22 +16,31 @@ const CreatePost = ({ navigation }) => {
     const [isPending, setIsPending] = useState(false);
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const post = { title, body, author };
         setIsPending(true);
         // Here you would typically send the data to your backend or local storage
-        // For demonstration, we'll just log the post and pretend we're sending it
-        console.log(post);
-        // Simulate a network request with a delay
-        setTimeout(() => {
-            setIsPending(false);
-            alert('Post added!'); // Show some feedback
-            // Reset form (optional)
+        //console.log(post);
+        try {
+            await setDoc(doc(db, "Posts"), post);
+            alert('Post added!');
             setTitle('');
             setBody('');
             setAuthor('');
-            // Navigate or update UI
-        }, 2000); // Simulate a 2-second network request
+        } catch (error){
+            alert('Error adding post:', error);
+        }
+        setIsPending(false);
+        // Simulate a network request with a delay
+        // setTimeout(() => {
+        //     setIsPending(false);
+        //     alert('Post added!'); // Show some feedback
+        //     // Reset form 
+        //     setTitle('');
+        //     setBody('');
+        //     setAuthor('');
+        //     // Navigate or update UI
+        // }, 2000); // Simulate a 2-second network request
     };
 
     return (
@@ -60,6 +72,19 @@ const CreatePost = ({ navigation }) => {
         </View>
     );
 };
+
+// const readDataFromFirestore = async (collection) => {
+//     try {
+//         const ref = firebase.firestore().collection(collection)
+//         const response = await ref.get()
+//         return response
+//     } catch (error){
+//         return error
+//     }
+// }
+
+
+
 
 const styles = StyleSheet.create({
     container: {
