@@ -4,6 +4,9 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIn
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+//Firebase imports
+import { collection, addDoc } from "firebase/firestore";
+
 import { db } from "../firebaseconfig"
 
 const CreatePost = ({ navigation }) => {
@@ -13,22 +16,21 @@ const CreatePost = ({ navigation }) => {
     const [isPending, setIsPending] = useState(false);
 
 
-    const handleSubmit = () => {
-        const post = { title, body, author };
+    const handleSubmit = async () => {
         setIsPending(true);
-        // Here you would typically send the data to your backend or local storage
-        // For demonstration, we'll just log the post and pretend we're sending it
-        console.log(post);
-        // Simulate a network request with a delay
-        setTimeout(() => {
-            setIsPending(false);
-            alert('Post added!'); // Show some feedback
-            // Reset form (optional)
-            setTitle('');
-            setBody('');
-            setAuthor('');
-            // Navigate or update UI
-        }, 2000); // Simulate a 2-second network request
+        const post = { title, body, author };
+
+        try{
+            const docRef = await addDoc(collection(db, "posts"),{
+                title: title,
+                body: body,
+                author: author
+            });
+            
+        } catch (e){
+            console.error("Error adding document: ", e);
+        }
+        setIsPending(false);
     };
 
     return (
