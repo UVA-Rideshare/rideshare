@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 5,
     },
-    contact: {
+    author: {
         color: '#007bff',
         marginBottom: 5,
     },
-    description: {
+    body: {
         color: '#333',
     },
 });

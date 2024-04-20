@@ -26,6 +26,7 @@ const CreatePost = ({ navigation }) => {
                 body: body,
                 author: author
             });
+            navigation.goBack();
             
         } catch (e){
             console.error("Error adding document: ", e);

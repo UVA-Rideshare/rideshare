@@ -17,7 +17,7 @@ const Homepage = ({ navigation }) => {
         const handleGetPosts = async () => {
             const data = await getDocs(collection(db, "posts"));
             setPosts(data);
-            data.forEach((doc) => {console.log(`DOc data: ${doc.data().title}`)})
+            data.forEach((doc) => {console.log(`Doc data: ${doc.data().title}`)})
         }
 
         handleGetPosts();
