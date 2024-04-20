@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js';
-import CreatePost from './createPost.js';
 import BottomNavBar from './components/navbar.js';
 import { useFocusEffect } from '@react-navigation/native';
+import { FlatList } from 'react-native';
 
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseconfig';
@@ -13,33 +13,39 @@ const Homepage = ({ navigation }) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useFocusEffect(React.useCallback(() => {
-    const handleGetPosts = async () => {
-      const data = await getDocs(collection(db, 'posts'));
-      setPosts(data.docs);
-      setLoading(false);
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const handleGetPosts = async () => {
+        const data = await getDocs(collection(db, 'posts'));
+        setPosts(data.docs);
+        setLoading(false);
+      };
 
-    handleGetPosts();
-  }, []));
+      handleGetPosts();
+    }, [])
+  );
+
+  const renderItem = ({ item }) => (
+    <HomepagePost
+      title={item.data().title}
+      body={item.data().body}
+      author={item.data().author}
+    />
+  );
+
+  const keyExtractor = (item) => item.id;
 
   return (
     <SafeAreaView style={styles.safeArea}>
       {loading ? (
         <Text>Loading...</Text>
       ) : (
-        <>
-          {posts &&
-            posts.map((post) => (
-              <HomepagePost
-                key={post.id}
-                title={post.data().title}
-                body={post.data().body}
-                author={post.data().author}
-              />
-            ))}
-          <BottomNavBar navigation={navigation} />
-        </>
+        <FlatList
+          data={posts}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          ListFooterComponent={<BottomNavBar navigation={navigation} />}
+        />
       )}
     </SafeAreaView>
   );
@@ -47,10 +53,6 @@ const Homepage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  container: {
     flex: 1,
   },
 });
