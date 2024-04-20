@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js';
 import CreatePost from './createPost.js';
 import BottomNavBar from './components/navbar.js';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseconfig';
@@ -12,7 +13,7 @@ const Homepage = ({ navigation }) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useFocusEffect(React.useCallback(() => {
     const handleGetPosts = async () => {
       const data = await getDocs(collection(db, 'posts'));
       setPosts(data.docs);
@@ -20,7 +21,7 @@ const Homepage = ({ navigation }) => {
     };
 
     handleGetPosts();
-  }, []);
+  }, []));
 
   return (
     <SafeAreaView style={styles.safeArea}>
