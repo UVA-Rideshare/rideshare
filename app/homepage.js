@@ -1,39 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js'
 import CreatePost from './createPost.js';
 import BottomNavBar from './components/navbar.js';
 
-const samplePostDB = [
-    {
-        title: "Heading to NOVA 2/14",
-        contact: "703-420-6969",
-        description: "Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20Heading to NOVA on valentines day, would like $20"
-    }, 
-    {
-        title: "Going to Richmond",
-        contact: "arthur.gmail.com",
-        description: "Going to interview"
-    }, 
-    {
-        title: "Going to Norfolk",
-        contact: "brahsucxk@aol.com",
-        description: "Heading off to Norfolk :)"
-    }, 
-]
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../firebaseconfig"
+
 
 const Homepage = ({ navigation }) => {
+
+    const [posts, setPosts] = useState(null);
+
+    useEffect(() => {
+        const handleGetPosts = async () => {
+            const data = await getDocs(collection(db, "posts"));
+            setPosts(data);
+            data.forEach((doc) => {console.log(`DOc data: ${doc.data().title}`)})
+        }
+
+        handleGetPosts();
+
+    }, [])
+
     return (
         <SafeAreaView style={styles.safeArea}>
-            {samplePostDB.map((post, index) => (
-                <HomepagePost 
-                    key={index}
-                    title={post.title}
-                    contact={post.contact}
-                    description={post.description} 
-                />
-            ))}
+            {posts && posts.forEach((post) => {
+                <Text>{post.data().title}</Text>
+            }
+            )}
+                
+
             <BottomNavBar
                 navigation={navigation}
             />
