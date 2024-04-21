@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'reac
 import { db } from '../../firebaseconfig';
 import { doc, collection, deleteDoc } from 'firebase/firestore';
 
-const HomepagePost = ({postID, title, body, author, isPostAuthor}) => {
+const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}) => {
 
     const handleDelete = () => {
         Alert.alert(
@@ -13,7 +13,9 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor}) => {
                 {
                     text: "Delete", 
                     onPress: async () => {
-                        await deleteDoc(doc(db, 'posts', postID));    
+                        await deleteDoc(doc(db, 'posts', postID)); 
+                        onPostDeleted(postID);   
+                        
                     }, 
                     style: "cancel",
                 }, 

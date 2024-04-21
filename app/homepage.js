@@ -28,8 +28,12 @@ const Homepage = ({ navigation }) => {
       };
 
       handleGetPosts();
-    }, [refreshNeeded])
+    }, [])
   );
+
+  const removePostFromState = (postId) => {
+    setPosts(currentPosts => currentPosts.filter(post => post.id !== postId));
+  };
 
   const renderItem = ({ item }) => (
     
@@ -40,6 +44,8 @@ const Homepage = ({ navigation }) => {
       author={item.data().author}
       isPostAuthor={(authorEmail === item.data().author)}
       refresh = {toggleRefresh}
+      onPostDeleted = {removePostFromState}
+
     />
     
   );
