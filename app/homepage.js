@@ -12,7 +12,12 @@ import { db, auth } from '../firebaseconfig';
 const Homepage = ({ navigation }) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshNeeded, setRefreshNeeded] = useState(false);
   const authorEmail = auth.currentUser.email;
+
+  const toggleRefresh = () => {
+    setRefreshNeeded(prev => !prev);
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -23,7 +28,7 @@ const Homepage = ({ navigation }) => {
       };
 
       handleGetPosts();
-    }, [])
+    }, [refreshNeeded])
   );
 
   const renderItem = ({ item }) => (
@@ -34,6 +39,7 @@ const Homepage = ({ navigation }) => {
       body={item.data().body}
       author={item.data().author}
       isPostAuthor={(authorEmail === item.data().author)}
+      refresh = {toggleRefresh}
     />
     
   );
