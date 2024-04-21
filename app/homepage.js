@@ -7,11 +7,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import { FlatList } from 'react-native';
 
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebaseconfig';
+import { db, auth } from '../firebaseconfig';
 
 const Homepage = ({ navigation }) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const authorEmail = auth.currentUser.email;
 
   useFocusEffect(
     useCallback(() => {
@@ -26,11 +27,15 @@ const Homepage = ({ navigation }) => {
   );
 
   const renderItem = ({ item }) => (
+    
     <HomepagePost
+      postID={item.id}
       title={item.data().title}
       body={item.data().body}
       author={item.data().author}
+      isPostAuthor={(authorEmail === item.data().author)}
     />
+    
   );
 
   const keyExtractor = (item) => item.id;
@@ -41,14 +46,14 @@ const Homepage = ({ navigation }) => {
         <Text>Loading...</Text>
       ) : (
         <>
+        <View style={{flex: 1}}>
         <FlatList
           data={posts}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
         />
-        <View style={styles.navContainer}>
-        <BottomNavBar navigation={navigation}></BottomNavBar>
         </View>
+        <BottomNavBar navigation={navigation}></BottomNavBar>
         </>
         
       )}

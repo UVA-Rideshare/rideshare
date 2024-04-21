@@ -7,12 +7,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 //Firebase imports
 import { collection, addDoc } from "firebase/firestore";
 
-import { db } from "../firebaseconfig"
+import { db, auth } from "../firebaseconfig"
 
 const CreatePost = ({ navigation }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('');
+    const author = auth.currentUser;
+    if (!author) {
+        return null;
+    }
     const [isPending, setIsPending] = useState(false);
 
 
@@ -24,7 +27,7 @@ const CreatePost = ({ navigation }) => {
             const docRef = await addDoc(collection(db, "posts"),{
                 title: title,
                 body: body,
-                author: author
+                author: author.email
             });
 
             alert("Your post has been submitted.")
@@ -51,14 +54,6 @@ const CreatePost = ({ navigation }) => {
                 multiline
                 value={body}
                 onChangeText={setBody}
-            />
-            <Text>Post author:</Text>
-            <Text>Reminder to leave your contact information!</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Author"
-                value={author}
-                onChangeText={setAuthor}
             />
             {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
             {isPending && <ActivityIndicator size="large" />}
