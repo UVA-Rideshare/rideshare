@@ -10,9 +10,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      console.log("starting")
       const response = await signInWithEmailAndPassword(auth, username, password);
-      console.log("finished")
       navigation.navigate('Homepage');
     } catch (error) {
       console.log(error);
