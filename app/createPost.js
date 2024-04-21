@@ -31,6 +31,8 @@ const CreatePost = ({ navigation }) => {
             });
 
             alert("Your post has been submitted.")
+            navigation.navigate('Homepage');
+        
         } catch (e){
             console.error("Error adding document: ", e);
             alert("There was an error submitting your post.")
