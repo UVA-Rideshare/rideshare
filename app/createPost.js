@@ -26,9 +26,12 @@ const CreatePost = ({ navigation }) => {
                 body: body,
                 author: author
             });
+
+            alert("Your post has been submitted.")
             
         } catch (e){
             console.error("Error adding document: ", e);
+            alert("There was an error submitting your post.")
         }
         setIsPending(false);
     };

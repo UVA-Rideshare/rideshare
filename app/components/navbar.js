@@ -16,7 +16,7 @@ const BottomNavBar = ({ navigation }) => {
         <Text>Add</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {console.log("not done yet")}} style={styles.navItem}>
+      <TouchableOpacity onPress={() => {navigation.navigate('ProfilePage')}} style={styles.navItem}>
         {/* This would typically be the profile picture */}
         <Image source={require('../../assets/profilepicture.png')} style={styles.navIcon} />
         <Text>Profile</Text>

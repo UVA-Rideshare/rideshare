@@ -40,12 +40,17 @@ const Homepage = ({ navigation }) => {
       {loading ? (
         <Text>Loading...</Text>
       ) : (
+        <>
         <FlatList
           data={posts}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          ListFooterComponent={<BottomNavBar navigation={navigation} />}
         />
+        <View style={styles.navContainer}>
+        <BottomNavBar navigation={navigation}></BottomNavBar>
+        </View>
+        </>
+        
       )}
     </SafeAreaView>
   );
@@ -55,6 +60,9 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+  navContainer: {
+    flex: 1,
+  }
 });
 
 export default Homepage;
