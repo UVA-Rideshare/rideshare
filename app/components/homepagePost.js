@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { db } from '../../firebaseconfig';
-import { doc, collection, deleteDoc, updateDoc} from 'firebase/firestore';
+import { doc, collection, deleteDoc, updateDoc, documentId} from 'firebase/firestore';
 import { set } from 'firebase/database';
 
 const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}) => {
@@ -26,11 +26,10 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}
             ]
         )
     }
+    const [userInput, setUserInput] = useState('');
 
     const handleUpdate = async () => {
         
-        const [userInput, setUserInput] = useState('');
-
         Alert.prompt(
             'Update your post here!',
             'Change the body of your ride details below!',
@@ -39,7 +38,10 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}
             'plain-text'
         )
 
-        const updatedPost = await updateDoc(doc, "posts", {
+        const docRef = doc(db, "posts", postID);
+
+        
+        const updatedPost = await updateDoc(docRef, "posts",  {
             body: userInput
         })
         
