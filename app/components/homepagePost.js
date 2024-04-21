@@ -13,14 +13,7 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor }) => {
                 {
                     text: "Delete", 
                     onPress: async () => {
-                        try {
-                        await deleteDoc(doc(db, 'posts', postID))
-                        }
-                        catch {
-                            console.log("erwqerq");
-                        }
-                        
-                        
+                        await deleteDoc(doc(db, 'posts', postID))              
                     }, 
                     style: "cancel",
                 }, 
