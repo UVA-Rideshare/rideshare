@@ -1,26 +1,32 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore } from "firebase/firestore"
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA5Q-r2nWv99-axtfUoM5xlvCZ9DHUOE_4",
-  authDomain: "uva-rideshare.firebaseapp.com",
-  projectId: "uva-rideshare",
-  storageBucket: "uva-rideshare.appspot.com",
-  messagingSenderId: "3013726099",
-  appId: "1:3013726099:web:3bb82484fa405a99712266",
-  measurementId: "G-HDDRT3Y7NX"
+  apiKey: "AIzaSyB8nVYzA08vGn9_4RvIHSSeZRfLxc2glf4",
+  authDomain: "hoorides-d5680.firebaseapp.com",
+  projectId: "hoorides-d5680",
+  storageBucket: "hoorides-d5680.appspot.com",
+  messagingSenderId: "647384862737",
+  appId: "1:647384862737:web:725326dd056792902321b0",
+  measurementId: "G-VTCVW1G98G"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app)
+const db = getFirestore(app);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 
 export default app;
-export { analytics, db};
+export {db, auth};

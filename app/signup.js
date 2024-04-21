@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { auth } from '../firebaseconfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
+  const [accountCreationFailure, setAccountCreationFailure] = useState(false);
 
-  const handleSignUp = () => {
-    // Implement sign-up logic
+  const handleSignUp = async () => {
+    //create a user with an email and password, and store using Firebase's auth product
+    try {
+      const response = await createUserWithEmailAndPassword(auth, email, password);
+      alert('Account created!')
+    } catch (error) {
+      alert('Account creation failed. Make sure password is at least 6 characters long.');
+      console.log(error)
+    }
+
   };
 
   return (
@@ -25,13 +38,6 @@ const SignUpScreen = () => {
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
           secureTextEntry
           style={styles.input}
         />

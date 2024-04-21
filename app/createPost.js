@@ -4,31 +4,40 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIn
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { db } from "../firebaseconfig"
+//Firebase imports
+import { collection, addDoc } from "firebase/firestore";
+
+import { db, auth } from "../firebaseconfig"
 
 const CreatePost = ({ navigation }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('');
+    const author = auth.currentUser;
+    if (!author) {
+        return null;
+    }
     const [isPending, setIsPending] = useState(false);
 
 
-    const handleSubmit = () => {
-        const post = { title, body, author };
+    const handleSubmit = async () => {
         setIsPending(true);
-        // Here you would typically send the data to your backend or local storage
-        // For demonstration, we'll just log the post and pretend we're sending it
-        console.log(post);
-        // Simulate a network request with a delay
-        setTimeout(() => {
-            setIsPending(false);
-            alert('Post added!'); // Show some feedback
-            // Reset form (optional)
-            setTitle('');
-            setBody('');
-            setAuthor('');
-            // Navigate or update UI
-        }, 2000); // Simulate a 2-second network request
+        const post = { title, body, author };
+
+        try{
+            const docRef = await addDoc(collection(db, "posts"),{
+                title: title,
+                body: body,
+                author: author.email
+            });
+
+            alert("Your post has been submitted.")
+            navigation.navigate('Homepage');
+        
+        } catch (e){
+            console.error("Error adding document: ", e);
+            alert("There was an error submitting your post.")
+        }
+        setIsPending(false);
     };
 
     return (
@@ -46,14 +55,6 @@ const CreatePost = ({ navigation }) => {
                 multiline
                 value={body}
                 onChangeText={setBody}
-            />
-            <Text>Post author:</Text>
-            <Text>Reminder to leave your contact information!</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Author"
-                value={author}
-                onChangeText={setAuthor}
             />
             {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
             {isPending && <ActivityIndicator size="large" />}

@@ -5,6 +5,7 @@ import LoginScreen from './app/index.js';
 import SignUpScreen from './app/signup.js';
 import Homepage from './app/homepage.js'
 import CreatePost from './app/createPost.js';
+import ProfilePage from './app/profilePage.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Homepage" component={Homepage} />
         <Stack.Screen name= "CreatePost" component={CreatePost} />
+        <Stack.Screen name="ProfilePage" component={ProfilePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

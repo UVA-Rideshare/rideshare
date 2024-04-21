@@ -1,12 +1,53 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { db } from '../../firebaseconfig';
+import { doc, collection, deleteDoc } from 'firebase/firestore';
 
-const HomepagePost = ({ title, contact, description }) => {
+const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}) => {
+
+    const handleDelete = () => {
+        Alert.alert(
+            "Confirm Delete", 
+            "Are you sure that you want to delete your post?", 
+            [ 
+                {
+                    text: "Delete", 
+                    onPress: async () => {
+                        await deleteDoc(doc(db, 'posts', postID)); 
+                        onPostDeleted(postID);   
+                        
+                    }, 
+                    style: "cancel",
+                }, 
+                {
+                    text: "Cancel", 
+                }
+            ]
+        )
+    }
+
+    const handleUpdate = () => {
+
+    }
     return (
         <View style={styles.postContainer}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.contact}>{contact}</Text>
-            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.body}>{body}</Text>
+            <Text style={styles.author}>{author}</Text>
+
+            {isPostAuthor && 
+            (
+            <View>
+            <TouchableOpacity style={styles.button} onPress={handleDelete}>
+                <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
+                <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+            </View>
+            )
+            }
+            
         </View>
     );
 };
@@ -35,6 +76,26 @@ const styles = StyleSheet.create({
     description: {
         color: '#333',
     },
+    button: {
+        backgroundColor: 'red', 
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5, 
+        marginTop: 20,
+      },
+    updateButton: {
+        backgroundColor: 'green', 
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5, 
+        marginTop: 20,
+    }, 
+      buttonText: {
+        color: 'white',
+        fontSize: 16, 
+        fontWeight: 'bold', 
+        textAlign: 'center',
+      }
 });
 
 export default HomepagePost;
