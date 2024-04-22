@@ -45,6 +45,7 @@ const Homepage = ({ navigation }) => {
       isPostAuthor={(authorEmail === item.data().author)}
       refresh = {toggleRefresh}
       onPostDeleted = {removePostFromState}
+      navigation={navigation}
 
     />
     
