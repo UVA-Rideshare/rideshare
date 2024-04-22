@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { db } from '../../firebaseconfig';
-import { doc, collection, deleteDoc } from 'firebase/firestore';
+import { doc, collection, deleteDoc, updateDoc} from 'firebase/firestore';
+import { set } from 'firebase/database';
 
-const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}) => {
+const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted, navigation}) => {
 
     const handleDelete = () => {
         Alert.alert(
@@ -26,8 +27,9 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted}
         )
     }
 
-    const handleUpdate = () => {
-
+    const handleUpdate = async () => {
+        navigation.navigate('UpdatePost', {postID: postID, oldTitle: title, oldBody: body});
+        
     }
     return (
         <View style={styles.postContainer}>
