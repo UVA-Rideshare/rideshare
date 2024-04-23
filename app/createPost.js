@@ -42,7 +42,7 @@ const CreatePost = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Catch a ride here</Text>
+            <Text style={styles.title}>Post a ride here!</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Post title"

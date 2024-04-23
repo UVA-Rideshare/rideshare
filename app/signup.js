@@ -4,7 +4,7 @@ import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,6 +16,8 @@ const SignUpScreen = () => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       alert('Account created!')
+      navigation.navigate('Login');
+      
     } catch (error) {
       alert('Account creation failed. Make sure password is at least 6 characters long.');
       console.log(error)
