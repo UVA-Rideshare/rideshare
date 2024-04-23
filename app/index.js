@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -26,6 +26,7 @@ const LoginScreen = ({ navigation }) => {
       <SafeAreaView style={styles.logoContainer}>
         {/* You'll need to add an Image component for the logo if you have one */}
         <Text style={styles.title}>HooRides</Text>
+        <Image source={require('../assets/logo.png')} style={styles.navIcon}></Image>
       </SafeAreaView>
       <TextInput
         placeholder="Email"
@@ -55,6 +56,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  navIcon: {
+    width: 100, // Increased width to make the icon bigger
+    height: 100, // Increased height to make the icon bigger
+    marginBottom: 5,
+    alignSelf: 'center', // Centers the icon horizontally
   },
   title: {
     fontSize: 24,
