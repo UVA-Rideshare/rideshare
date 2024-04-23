@@ -53,21 +53,22 @@ const Homepage = ({ navigation }) => {
     setPosts(currentPosts => currentPosts.filter(post => post.id !== postId));
   };
 
-  const renderItem = ({ item }) => (
-    
-    <HomepagePost
-      postID={item.id}
-      title={item.data().title}
-      body={item.data().body}
-      author={item.data().author}
-      isPostAuthor={(authorEmail === item.data().author)}
-      //refresh = {toggleRefresh}
-      onPostDeleted = {removePostFromState}
-      navigation={navigation}
-
-    />
-    
-  );
+  const renderItem = ({ item }) => {
+    console.log('item:', item.data().location);
+  
+    return (
+      <HomepagePost
+        postID={item.id}
+        title={item.data().title}
+        body={item.data().body}
+        author={item.data().author}
+        location={item.data().location}
+        isPostAuthor={authorEmail === item.data().author}
+        onPostDeleted={removePostFromState}
+        navigation={navigation}
+      />
+    );
+  };
 
   const keyExtractor = (item) => item.id;
 
