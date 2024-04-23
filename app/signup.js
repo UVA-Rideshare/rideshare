@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, Alert } from 'react-native';
 import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -16,15 +16,15 @@ const SignUpScreen = ({navigation}) => {
     if (/^[^@]+@virginia\.edu$/.test(email)){
       try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
-        alert('Account created!')
+        Alert.alert('Success!', 'Account created!')
         navigation.navigate('Login');
         
       } catch (error) {
-        alert('Account creation failed. Make sure password is at least 6 characters long.');
+        Alert.alert('Try again...','Account creation failed. Make sure password is at least 6 characters long.');
         console.log(error)
       }
     } else{
-      alert('Please use a valid Virginia University email address.');
+      Alert.alert('Are you really a UVA student...','Please use a valid Virginia University email address.');
     }
 
   };
