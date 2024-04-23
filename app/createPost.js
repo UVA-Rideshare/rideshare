@@ -51,6 +51,7 @@ const CreatePost = ({ navigation }) => {
                 placeholder="Post title"
                 value={title}
                 onChangeText={setTitle}
+                maxLength={100}
             />
             <TextInput
                 style={[styles.input, styles.textArea]}
@@ -58,6 +59,7 @@ const CreatePost = ({ navigation }) => {
                 multiline
                 value={body}
                 onChangeText={setBody}
+                maxLength={300}
             />
             <TextInput
                 style={styles.input}
@@ -65,6 +67,7 @@ const CreatePost = ({ navigation }) => {
                 multiline
                 value={location}
                 onChangeText={setLocation}
+                maxLength={100}
             />
             {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
             {isPending && <ActivityIndicator size="large" />}
