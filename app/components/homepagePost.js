@@ -82,7 +82,7 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
             setRenderMap(!renderMap);
         }
         else {
-            alert("There was no valid location inputted by the post author");
+            Alert.alert("No location", "The author did not input a valid location");
         }
     }
 
@@ -103,7 +103,7 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
               setMyListOfComments(prevComments =>[...prevComments, auth.currentUser.email + ": " + myComment])
               
               setMyComment('');
-              alert("Comment submitted!");
+              Alert.alert("Comment submitted")
         } catch (error) {
             console.error("An error occured: " + error)
         }
