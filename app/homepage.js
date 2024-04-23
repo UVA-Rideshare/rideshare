@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, RefreshControl, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js';
@@ -35,11 +35,19 @@ const Homepage = ({ navigation }) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+      const handleGetPosts = async () => {
+        const data = await getDocs(collection(db, 'posts'));
+        setPosts(data.docs);
+        setLoading(false);
+      };
+
+      handleGetPosts();
 
     setTimeout(() => {
       setRefreshing(false);
     }, 2000)
   }, []);
+
 
   const removePostFromState = (postId) => {
     setPosts(currentPosts => currentPosts.filter(post => post.id !== postId));
