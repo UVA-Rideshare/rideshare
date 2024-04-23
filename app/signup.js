@@ -13,14 +13,18 @@ const SignUpScreen = ({navigation}) => {
 
   const handleSignUp = async () => {
     //create a user with an email and password, and store using Firebase's auth product
-    try {
-      const response = await createUserWithEmailAndPassword(auth, email, password);
-      alert('Account created!')
-      navigation.navigate('Login');
-      
-    } catch (error) {
-      alert('Account creation failed. Make sure password is at least 6 characters long.');
-      console.log(error)
+    if (/^[^@]+@virginia\.edu$/.test(email)){
+      try {
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+        alert('Account created!')
+        navigation.navigate('Login');
+        
+      } catch (error) {
+        alert('Account creation failed. Make sure password is at least 6 characters long.');
+        console.log(error)
+      }
+    } else{
+      alert('Please use a valid Virginia University email address.');
     }
 
   };
