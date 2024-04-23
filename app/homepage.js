@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, RefreshControl, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomepagePost from './components/homepagePost.js';
 import BottomNavBar from './components/navbar.js';
@@ -14,10 +14,12 @@ const Homepage = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [refreshNeeded, setRefreshNeeded] = useState(false);
   const authorEmail = auth.currentUser.email;
+  const [refreshing, setRefreshing] = useState(false);
 
-  const toggleRefresh = () => {
-    setRefreshNeeded(prev => !prev);
-  }
+  // const toggleRefresh = () => {
+  //   setRefreshNeeded(prev => !prev);
+  // }
+
 
   useFocusEffect(
     useCallback(() => {
@@ -31,6 +33,14 @@ const Homepage = ({ navigation }) => {
     }, [])
   );
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000)
+  }, []);
+
   const removePostFromState = (postId) => {
     setPosts(currentPosts => currentPosts.filter(post => post.id !== postId));
   };
@@ -43,7 +53,7 @@ const Homepage = ({ navigation }) => {
       body={item.data().body}
       author={item.data().author}
       isPostAuthor={(authorEmail === item.data().author)}
-      refresh = {toggleRefresh}
+      //refresh = {toggleRefresh}
       onPostDeleted = {removePostFromState}
       navigation={navigation}
 
@@ -64,6 +74,9 @@ const Homepage = ({ navigation }) => {
           data={posts}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+          }
         />
         </View>
         <BottomNavBar navigation={navigation}></BottomNavBar>
