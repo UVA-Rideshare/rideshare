@@ -12,6 +12,7 @@ import { db, auth } from "../firebaseconfig"
 const CreatePost = ({ navigation }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [location, setLocation] = useState('');
     const author = auth.currentUser;
     if (!author) {
         return null;
@@ -27,7 +28,8 @@ const CreatePost = ({ navigation }) => {
             const docRef = await addDoc(collection(db, "posts"),{
                 title: title,
                 body: body,
-                author: author.email
+                author: author.email, 
+                location: location,
             });
 
             alert("Your post has been submitted.")
@@ -55,6 +57,13 @@ const CreatePost = ({ navigation }) => {
                 multiline
                 value={body}
                 onChangeText={setBody}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Location of Rideshare"
+                multiline
+                value={location}
+                onChangeText={setLocation}
             />
             {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
             {isPending && <ActivityIndicator size="large" />}

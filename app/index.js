@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     height: 100, // Increased height to make the icon bigger
     marginBottom: 5,
     alignSelf: 'center', // Centers the icon horizontally
+    borderRadius: 20, 
   },
   title: {
     fontSize: 24,

@@ -1,11 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { db } from '../../firebaseconfig';
 import { doc, collection, deleteDoc, updateDoc} from 'firebase/firestore';
 import { set } from 'firebase/database';
 import { Divider } from '@gluestack-ui/themed';
+import MapView from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
 
-const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted, navigation}) => {
+//https://docs.expo.dev/versions/latest/sdk/map-view/ full set up on docs here (outside of expo)
+
+
+const HomepagePost = ({postID, title, body, author, location, isPostAuthor, onPostDeleted, navigation}) => {
+
+    const [renderMap, setRenderMap] = useState(false);
+    const [region, setRegion] = useState(null);
+    const [validLocation, setValidLocation] = useState(true);
+    const locationName = location;
+    Geocoder.init('AIzaSyAJZFUmOcXJLFKN2v6TvB2V9S_-2cOhfYs');
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const json = await Geocoder.from(locationName);
+            setRegion({
+              latitude: json.results[0].geometry.location.lat,
+              longitude: json.results[0].geometry.location.lng,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            });
+          } catch (error) {
+            setValidLocation(false);
+          }
+        };
+      
+        fetchData();
+      }, []);
+
+    
 
     const handleDelete = () => {
         Alert.alert(
@@ -32,6 +63,15 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted,
         navigation.navigate('UpdatePost', {postID: postID, oldTitle: title, oldBody: body});
         
     }
+
+    const viewMap = () => {
+        if (validLocation){
+            setRenderMap(!renderMap);
+        }
+        else {
+            alert("There was no valid location inputted by the post author");
+        }
+    }
     return (
         <View style={styles.postContainer}>
 
@@ -45,6 +85,7 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted,
             <Text style={styles.body}>{body}</Text>
             </View>
 
+            
             {isPostAuthor && 
             (
             <View style={styles.buttonContainer}>
@@ -57,6 +98,15 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted,
             </View>
             )
             }
+
+            <TouchableOpacity style={styles.mapButton} onPress={viewMap}>
+                <Text style={styles.buttonText}>Toggle Map</Text>
+            </TouchableOpacity>
+            
+            {renderMap && (
+                <MapView style={styles.map} region={region}></MapView>
+            )}
+
             
         </View>
     );
@@ -114,12 +164,23 @@ const styles = StyleSheet.create({
         borderRadius: 5, 
         marginTop: 20,
     }, 
+    mapButton: {
+        backgroundColor: 'orange', 
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5, 
+        marginTop: 20,
+    }, 
       buttonText: {
         color: 'white',
         fontSize: 16, 
         fontWeight: 'bold', 
         textAlign: 'center',
-      }
+      }, 
+      map: {
+        width: '100%',
+        height: '50%', 
+      },
 });
 
 export default HomepagePost;
