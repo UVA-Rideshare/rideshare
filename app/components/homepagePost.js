@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'reac
 import { db } from '../../firebaseconfig';
 import { doc, collection, deleteDoc, updateDoc} from 'firebase/firestore';
 import { set } from 'firebase/database';
+import { Divider } from '@gluestack-ui/themed';
 
 const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted, navigation}) => {
 
@@ -33,13 +34,20 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted,
     }
     return (
         <View style={styles.postContainer}>
+
             <Text style={styles.title}>{title}</Text>
+            
+            <View style={styles.objectContainer}>
+            <Text style={styles.author}>Author: {author}</Text>
+            </View>
+
+            <View style={styles.postContainer}>
             <Text style={styles.body}>{body}</Text>
-            <Text style={styles.author}>{author}</Text>
+            </View>
 
             {isPostAuthor && 
             (
-            <View>
+            <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleDelete}>
                 <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
@@ -55,6 +63,10 @@ const HomepagePost = ({postID, title, body, author, isPostAuthor, onPostDeleted,
 };
 
 const styles = StyleSheet.create({
+    buttonContainer: {
+        flexDirection: 'row',
+        marginTop: 0, 
+    },
     postContainer: {
         backgroundColor: '#fff',
         padding: 15,
@@ -64,6 +76,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
+        marginBottom: 15,
+    }, 
+    objectContainer: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#000',
+        borderStyle: 'solid',
         marginBottom: 15,
     },
     title: {
@@ -84,6 +105,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 5, 
         marginTop: 20,
+        marginRight: 10,
       },
     updateButton: {
         backgroundColor: 'green', 
