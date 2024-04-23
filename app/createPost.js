@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -32,7 +32,7 @@ const CreatePost = ({ navigation }) => {
                 location: location,
             });
 
-            alert("Your post has been submitted.")
+            Alert.alert("Lets get you that ride!", "Your post has been submitted.")
             navigation.navigate('Homepage');
         
         } catch (e){
