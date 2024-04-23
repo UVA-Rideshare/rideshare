@@ -63,6 +63,7 @@ const Homepage = ({ navigation }) => {
         body={item.data().body}
         author={item.data().author}
         location={item.data().location}
+        listOfComments={item.data().comments}
         isPostAuthor={authorEmail === item.data().author}
         onPostDeleted={removePostFromState}
         navigation={navigation}

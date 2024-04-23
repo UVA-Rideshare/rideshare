@@ -29,7 +29,8 @@ const CreatePost = ({ navigation }) => {
                 title: title,
                 body: body,
                 author: author.email, 
-                location: location,
+                location: location, 
+                comments: [],
             });
 
             Alert.alert("Lets get you that ride!", "Your post has been submitted.")

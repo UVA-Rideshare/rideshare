@@ -17,7 +17,7 @@ const SignUpScreen = ({navigation}) => {
       try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
         Alert.alert('Success!', 'Account created!')
-        navigation.navigate('Login');
+        navigation.navigate('Homepage');
         
       } catch (error) {
         Alert.alert('Try again...','Account creation failed. Make sure password is at least 6 characters long.');
