@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate('Homepage');
     } catch (error) {
       console.log(error);
-      alert('Sign in failed')
+      Alert.alert('Error','Sign in failed')
     } finally {
       //can put something in here if needed
     }

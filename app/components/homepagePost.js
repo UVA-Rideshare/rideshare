@@ -60,7 +60,8 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
                     text: "Delete", 
                     onPress: async () => {
                         await deleteDoc(doc(db, 'posts', postID)); 
-                        onPostDeleted(postID);   
+                        onPostDeleted(postID);
+                        Alert.alert("Your post has been deleted.")   
                         
                     }, 
                     style: "cancel",
