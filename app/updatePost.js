@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -52,24 +52,26 @@ const UpdatePost = ({ navigation, route }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Update Post</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Updated title"
-                value={title}
-                onChangeText={setTitle}
-            />
-            <TextInput
-                style={[styles.input, styles.textArea]}
-                placeholder="Updated details"
-                multiline
-                value={body}
-                onChangeText={setBody}
-            />
-            {!isPending && <Button title="Update" onPress={handleSubmit} />}
-            {isPending && <ActivityIndicator size="large" />}
-        </View>
+        <TouchableWithoutFeedback style={styles.feedback} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Update Post</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Updated title"
+                    value={title}
+                    onChangeText={setTitle}
+                />
+                <TextInput
+                    style={[styles.input, styles.textArea]}
+                    placeholder="Updated details"
+                    multiline
+                    value={body}
+                    onChangeText={setBody}
+                />
+                {!isPending && <Button title="Update" onPress={handleSubmit} />}
+                {isPending && <ActivityIndicator size="large" />}
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

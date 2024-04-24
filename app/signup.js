@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -30,6 +30,7 @@ const SignUpScreen = ({navigation}) => {
   };
 
   return (
+    <TouchableWithoutFeedback style={styles.feedback} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
@@ -52,6 +53,7 @@ const SignUpScreen = ({navigation}) => {
         <Button title="Sign Up" onPress={handleSignUp} color="#5cb85c" />
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

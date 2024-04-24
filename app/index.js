@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -22,32 +23,34 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.logoContainer}>
-        {/* You'll need to add an Image component for the logo if you have one */}
-        <Text style={styles.title}>HooRides</Text>
-        <Image source={require('../assets/logo.png')} style={styles.navIcon}></Image>
+    <TouchableWithoutFeedback style = {styles.feedback} onPress = {Keyboard.dismiss}>
+      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.logoContainer}>
+          {/* You'll need to add an Image component for the logo if you have one */}
+          <Text style={styles.title}>HooRides</Text>
+          <Image source={require('../assets/logo.png')} style={styles.navIcon}></Image>
+        </SafeAreaView>
+        <TextInput
+          placeholder="Email"
+          value={username}
+          onChangeText={setUsername}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
+        </TouchableOpacity>
       </SafeAreaView>
-      <TextInput
-        placeholder="Email"
-        value={username}
-        onChangeText={setUsername}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -86,6 +89,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: 'blue',
   },
+  feedback:{
+    height: "100%"
+  
+  }
+
 });
 
 export default LoginScreen;

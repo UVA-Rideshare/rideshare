@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -44,34 +44,36 @@ const CreatePost = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Post a ride here!</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Post title"
-                value={title}
-                onChangeText={setTitle}
-                maxLength={40}
-            />
-            <TextInput
-                style={[styles.input, styles.textArea]}
-                placeholder="Post Details"
-                multiline
-                value={body}
-                onChangeText={setBody}
-                maxLength={300}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Location of Rideshare"
-                multiline
-                value={location}
-                onChangeText={setLocation}
-                maxLength={100}
-            />
-            {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
-            {isPending && <ActivityIndicator size="large" />}
-        </View>
+        <TouchableWithoutFeedback style={styles.feedback} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Post a ride here!</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Post title"
+                    value={title}
+                    onChangeText={setTitle}
+                    maxLength={40}
+                />
+                <TextInput
+                    style={[styles.input, styles.textArea]}
+                    placeholder="Post Details"
+                    multiline
+                    value={body}
+                    onChangeText={setBody}
+                    maxLength={300}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Location of Rideshare"
+                    multiline
+                    value={location}
+                    onChangeText={setLocation}
+                    maxLength={100}
+                />
+                {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
+                {isPending && <ActivityIndicator size="large" />}
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 
