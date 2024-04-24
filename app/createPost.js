@@ -51,7 +51,7 @@ const CreatePost = ({ navigation }) => {
                 placeholder="Post title"
                 value={title}
                 onChangeText={setTitle}
-                maxLength={100}
+                maxLength={40}
             />
             <TextInput
                 style={[styles.input, styles.textArea]}

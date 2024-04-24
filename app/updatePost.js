@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -41,7 +41,7 @@ const UpdatePost = ({ navigation, route }) => {
                 "body": body
             })
 
-            alert("Your post has been updated.")
+            Alert.alert("Success!", "Your post has been updated.")
             navigation.navigate('Homepage');
         
         } catch (e){
