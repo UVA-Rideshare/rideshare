@@ -68,7 +68,9 @@ const UpdatePost = ({ navigation, route }) => {
                     value={body}
                     onChangeText={setBody}
                 />
-                {!isPending && <Button title="Update" onPress={handleSubmit} />}
+                {!isPending && <TouchableOpacity style={styles.updateButton} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Update</Text>
+                </TouchableOpacity>}
                 {isPending && <ActivityIndicator size="large" />}
             </View>
         </TouchableWithoutFeedback>
@@ -96,7 +98,20 @@ const styles = StyleSheet.create({
     textArea: {
         height: 100,
         justifyContent: "flex-start"
-    }
+    },
+    updateButton: {
+        backgroundColor: '#4caf50', // Vibrant green
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 8,
+        marginTop: 10,
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });
 
 export default UpdatePost;
