@@ -70,7 +70,9 @@ const CreatePost = ({ navigation }) => {
                     onChangeText={setLocation}
                     maxLength={100}
                 />
-                {!isPending && <Button title="Add ride" onPress={handleSubmit} />}
+                {!isPending && <TouchableOpacity style={styles.updateButton} onPress={handleSubmit} >
+                    <Text style={styles.buttonText}>Add Ride</Text>
+                </TouchableOpacity>}
                 {isPending && <ActivityIndicator size="large" />}
             </View>
         </TouchableWithoutFeedback>
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#fff',
     },
     title: {
         fontSize: 22,
@@ -98,7 +101,20 @@ const styles = StyleSheet.create({
     textArea: {
         height: 100,
         justifyContent: "flex-start"
-    }
+    },
+    updateButton: {
+        backgroundColor: '#19C3EF', // Vibrant green
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 8,
+        marginTop: 10,
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });
 
 export default CreatePost;

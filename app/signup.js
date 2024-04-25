@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const SignUpScreen = ({navigation}) => {
@@ -32,7 +33,7 @@ const SignUpScreen = ({navigation}) => {
   return (
     <TouchableWithoutFeedback style={styles.feedback} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer}>    
         <TextInput
           placeholder="Email address"
           value={email}
