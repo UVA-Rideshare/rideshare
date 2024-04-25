@@ -7,6 +7,7 @@ import { Divider } from '@gluestack-ui/themed';
 import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import { LogBox } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 LogBox.ignoreLogs(['Warning: Each child in a list should have a unique "key" prop.']);
 
@@ -61,10 +62,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
                     onPress: async () => {
                         await deleteDoc(doc(db, 'posts', postID)); 
                         onPostDeleted(postID);
+                        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
                         Alert.alert("Your post has been deleted.")   
                         
                     }, 
-                    style: "cancel",
+                    style: "destructive",
                 }, 
                 {
                     text: "Cancel", 
@@ -80,9 +82,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
 
     const viewMap = () => {
         if (validLocation){
+            Haptics.selectionAsync(); //toggle feedback lol
             setRenderMap(!renderMap);
         }
         else {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert("No location", "The author did not input a valid location");
         }
     }
@@ -104,6 +108,7 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
               setMyListOfComments(prevComments =>[...prevComments, auth.currentUser.email + ": " + myComment])
               
               setMyComment('');
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               Alert.alert("Comment submitted")
         } catch (error) {
             console.error("An error occured: " + error)

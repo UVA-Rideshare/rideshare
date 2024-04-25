@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 
 //Firebase imports
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
@@ -40,7 +41,7 @@ const UpdatePost = ({ navigation, route }) => {
                 "title": title, 
                 "body": body
             })
-
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             Alert.alert("Success!", "Your post has been updated.")
             navigation.navigate('Homepage');
         
@@ -60,6 +61,7 @@ const UpdatePost = ({ navigation, route }) => {
                     placeholder="Updated title"
                     value={title}
                     onChangeText={setTitle}
+                    onFocus={() => Haptics.selectionAsync()}
                 />
                 <TextInput
                     style={[styles.input, styles.textArea]}
@@ -67,6 +69,7 @@ const UpdatePost = ({ navigation, route }) => {
                     multiline
                     value={body}
                     onChangeText={setBody}
+                    onFocus={() => Haptics.selectionAsync()}
                 />
                 {!isPending && <TouchableOpacity style={styles.updateButton} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Update</Text>
