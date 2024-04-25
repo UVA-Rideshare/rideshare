@@ -146,7 +146,7 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
             {renderMap && (
                 <MapView style={styles.map} region={region}></MapView>
             )}
-
+            
             <TextInput
                 style={styles.input}
                 placeholder="Add a comment"
@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#eeeeee',
+        
     },
 });
 

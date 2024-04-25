@@ -21,7 +21,13 @@ const CreatePost = ({ navigation }) => {
 
 
     const handleSubmit = async () => {
+        // cheks if title or body is empty
+        if (title.trim() === '' || body.trim() === '') {
+            Alert.alert("Missing Information", "Please enter both a title and details for the ride.");
+            return; 
+        }
         setIsPending(true);
+
         const post = { title, body, author };
 
         try{
