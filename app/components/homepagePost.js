@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     author: {
+        fontWeight: 'bold',
         color: '#555555',
         marginBottom: 5,
         fontSize: 16,
