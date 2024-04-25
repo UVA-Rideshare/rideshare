@@ -43,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
           style={styles.input}
         />
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -89,10 +89,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: 'blue',
   },
-  feedback:{
-    height: "100%"
-  
-  }
+  loginButton: {
+    backgroundColor: '#19C3EF', // Vibrant green
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginTop: 10,
+},
+buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+},
 
 });
 
