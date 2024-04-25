@@ -23,9 +23,6 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView 
-    style={styles.keyboardContainer}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <TouchableWithoutFeedback style = {styles.feedback} onPress = {Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <SafeAreaView style={styles.logoContainer}>
@@ -54,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </SafeAreaView>
     </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
   );
 };
 
