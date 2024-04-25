@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, TextInput, TouchableOpacity, Button, StyleSheet, Text, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -51,7 +51,9 @@ const SignUpScreen = ({navigation}) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Sign Up" onPress={handleSignUp} color="#5cb85c" />
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </View>
     </TouchableWithoutFeedback>
@@ -80,6 +82,19 @@ const styles = StyleSheet.create({
     width: '80%',
     marginTop: 10,
   },
+  signUpButton: {
+    backgroundColor: '#19C3EF', // Vibrant green
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginTop: 10,
+},
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+},
 });
 
 export default SignUpScreen;
