@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#fff',
     },
     title: {
         fontSize: 22,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start"
     },
     updateButton: {
-        backgroundColor: '#4caf50', // Vibrant green
+        backgroundColor: '#19C3EF', // Vibrant green
         paddingVertical: 12,
         paddingHorizontal: 25,
         borderRadius: 8,

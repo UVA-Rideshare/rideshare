@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -23,6 +23,9 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
+    <KeyboardAvoidingView 
+    style={styles.keyboardContainer}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <TouchableWithoutFeedback style = {styles.feedback} onPress = {Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <SafeAreaView style={styles.logoContainer}>
@@ -51,6 +54,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </SafeAreaView>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -59,6 +63,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  keyboardContainer: {
+    flex: 1,
   },
   navIcon: {
     width: 100, // Increased width to make the icon bigger
