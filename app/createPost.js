@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Button, ActivityIndicator, Alert, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 
 //Firebase imports
 import { collection, addDoc } from "firebase/firestore";
@@ -23,6 +24,7 @@ const CreatePost = ({ navigation }) => {
     const handleSubmit = async () => {
         // cheks if title or body is empty
         if (title.trim() === '' || body.trim() === '') {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert("Missing Information", "Please enter both a title and details for the ride.");
             return; 
         }
@@ -38,7 +40,7 @@ const CreatePost = ({ navigation }) => {
                 location: location, 
                 comments: [],
             });
-
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             Alert.alert("Lets get you that ride!", "Your post has been submitted.")
             navigation.navigate('Homepage');
         
@@ -58,6 +60,7 @@ const CreatePost = ({ navigation }) => {
                     placeholder="Post title"
                     value={title}
                     onChangeText={setTitle}
+                    onFocus={() => Haptics.selectionAsync()}
                     maxLength={40}
                 />
                 <TextInput
@@ -66,6 +69,7 @@ const CreatePost = ({ navigation }) => {
                     multiline
                     value={body}
                     onChangeText={setBody}
+                    onFocus={() => Haptics.selectionAsync()}
                     maxLength={300}
                 />
                 <TextInput
@@ -74,6 +78,7 @@ const CreatePost = ({ navigation }) => {
                     multiline
                     value={location}
                     onChangeText={setLocation}
+                    onFocus={() => Haptics.selectionAsync()}
                     maxLength={100}
                 />
                 {!isPending && <TouchableOpacity style={styles.updateButton} onPress={handleSubmit} >
