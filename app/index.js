@@ -3,6 +3,7 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Alert, Keyb
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import * as Haptics from 'expo-haptics';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -35,6 +36,7 @@ const LoginScreen = ({ navigation }) => {
           value={username}
           onChangeText={setUsername}
           style={styles.input}
+          onFocus={() => Haptics.selectionAsync()}
         />
         <TextInput
           placeholder="Password"
@@ -42,8 +44,13 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={setPassword}
           secureTextEntry
           style={styles.input}
+          onFocus={() => Haptics.selectionAsync()}
         />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+          handleLogin();
+        }}>
+        
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>

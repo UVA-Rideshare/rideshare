@@ -134,10 +134,16 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
             {isPostAuthor && 
             (
             <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleDelete}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleDelete();
+            }}>
                 <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
+            <TouchableOpacity style={styles.updateButton} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleUpdate();
+            }}>
                 <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
             </View>
@@ -160,7 +166,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
                 onChangeText={(text) => setMyComment(text)}
             />
 
-            {(!isPending && myComment !== '') && <TouchableOpacity style={styles.submitButton} onPress={handleSubmitComment}>
+            {(!isPending && myComment !== '') && <TouchableOpacity style={styles.submitButton} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleSubmitComment();}}>
+    
+                
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>}
             {isPending && <ActivityIndicator size="large" />}
