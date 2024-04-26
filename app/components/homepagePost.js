@@ -7,6 +7,7 @@ import { Divider } from '@gluestack-ui/themed';
 import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import { LogBox } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 LogBox.ignoreLogs(['Warning: Each child in a list should have a unique "key" prop.']);
 
@@ -61,10 +62,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
                     onPress: async () => {
                         await deleteDoc(doc(db, 'posts', postID)); 
                         onPostDeleted(postID);
+                        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
                         Alert.alert("Your post has been deleted.")   
                         
                     }, 
-                    style: "cancel",
+                    style: "destructive",
                 }, 
                 {
                     text: "Cancel", 
@@ -80,9 +82,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
 
     const viewMap = () => {
         if (validLocation){
+            Haptics.selectionAsync(); //toggle feedback lol
             setRenderMap(!renderMap);
         }
         else {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert("No location", "The author did not input a valid location");
         }
     }
@@ -104,6 +108,7 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
               setMyListOfComments(prevComments =>[...prevComments, auth.currentUser.email + ": " + myComment])
               
               setMyComment('');
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               Alert.alert("Comment submitted")
         } catch (error) {
             console.error("An error occured: " + error)
@@ -129,10 +134,16 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
             {isPostAuthor && 
             (
             <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleDelete}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleDelete();
+            }}>
                 <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
+            <TouchableOpacity style={styles.updateButton} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleUpdate();
+            }}>
                 <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
             </View>
@@ -155,7 +166,11 @@ const HomepagePost = ({postID, title, body, author, location, listOfComments, is
                 onChangeText={(text) => setMyComment(text)}
             />
 
-            {(!isPending && myComment !== '') && <TouchableOpacity style={styles.submitButton} onPress={handleSubmitComment}>
+            {(!isPending && myComment !== '') && <TouchableOpacity style={styles.submitButton} onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                handleSubmitComment();}}>
+    
+                
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>}
             {isPending && <ActivityIndicator size="large" />}

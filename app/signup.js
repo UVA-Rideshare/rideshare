@@ -3,6 +3,7 @@ import { View, TextInput, TouchableOpacity, Button, StyleSheet, Text, Alert, Key
 import { auth } from '../firebaseconfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 
 
 const SignUpScreen = ({navigation}) => {
@@ -41,6 +42,7 @@ const SignUpScreen = ({navigation}) => {
           style={styles.input}
           autoCapitalize="none"
           keyboardType="email-address"
+          onFocus={() => Haptics.selectionAsync()}
         />
         <TextInput
           placeholder="Password"
@@ -48,10 +50,15 @@ const SignUpScreen = ({navigation}) => {
           onChangeText={setPassword}
           secureTextEntry
           style={styles.input}
+          onFocus={() => Haptics.selectionAsync()}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+        <TouchableOpacity style={styles.signUpButton} onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+          handleSignUp();
+        }}>
+
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
