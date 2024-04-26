@@ -57,7 +57,7 @@ const CreatePost = ({ navigation }) => {
                 <Text style={styles.title}>Post a ride here!</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Post title"
+                    placeholder="Post Title"
                     value={title}
                     onChangeText={setTitle}
                     onFocus={() => Haptics.selectionAsync()}
